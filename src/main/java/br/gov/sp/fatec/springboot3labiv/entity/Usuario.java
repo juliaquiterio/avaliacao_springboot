@@ -1,10 +1,18 @@
 package br.gov.sp.fatec.springboot3labiv.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,17 +26,34 @@ public class Usuario {
     private String nome;
     @Column(name="usr_senha")
     private String senha;
+
+
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="uau_usuario_autorizacao",
+    joinColumns = {@JoinColumn(name= "usr_id")},
+    inverseJoinColumns = {@JoinColumn(name = "aut_id")} //coluna que se refere a autorizacao
+    )
+    private Set<Autorizacao> autorizacoes;
+
+    @OneToMany(mappedBy = "usuario")
+    private Set<Anotacao> anotacoes;
+    
+
+    //preciso usar para não dar ruim, ele precisa por padrão para instanciar a entidade
+    public Usuario(){
+        this.autorizacoes = new HashSet<Autorizacao>();
+    }
+
     public Long getId() {
         return id;
     }
     public Usuario(String nome, String senha) {
+        this(); //chama o construtor padrao
         this.nome = nome;
         this.senha = senha;
     }
-    //preciso usar para não dar ruim, ele precisa por padrão para instanciar a entidade
-    public Usuario(){
-
-    }
+    
 
     public void setId(Long id) {
         this.id = id;
