@@ -14,44 +14,51 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="aut_autorizacao")
+@Table(name = "aut_autorizacao")
 public class Autorizacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="aut_id")
+    @Column(name = "aut_id")
     private Long id;
-    @Column(name="aut_nome")
+
+    @Column(name = "aut_nome")
     private String nome;
-
-
-    @JsonIgnore 
+    
+    @JsonIgnore
     @ManyToMany(mappedBy = "autorizacoes", fetch = FetchType.LAZY)
     private Set<Usuario> usuarios;
-    
-    
 
-  
+     //preciso usar para não dar ruim, ele precisa por padrão para instanciar a entidade
     public Autorizacao(String nome) {
         this.nome = nome;
     }
-    //preciso usar para não dar ruim, ele precisa por padrão para instanciar a entidade
 
+    public Autorizacao() {}
 
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
 
+    public Set<Usuario> getUsuarios() {
+        return usuarios;
+    }
 
-    
+    public void setUsuarios(Set<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+
 }
 
