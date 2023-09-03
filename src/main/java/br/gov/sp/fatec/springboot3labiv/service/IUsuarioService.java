@@ -5,10 +5,11 @@ import java.util.List;
 import br.gov.sp.fatec.springboot3labiv.entity.Usuario;
 
 public interface IUsuarioService {
+
     public Usuario novoUsuario(Usuario usuario);
 
-    public List<Usuario>  buscarTodosUsuarios();
+    public List<Usuario> buscarTodosUsuarios();
 
-    public Usuario buscarPorId(Long Id);
-
+    public Usuario buscarPorId(Long id);
+    
 }
