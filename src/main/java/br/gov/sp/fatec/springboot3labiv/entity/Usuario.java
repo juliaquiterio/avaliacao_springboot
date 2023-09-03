@@ -16,60 +16,79 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="usr_usuario")
+@Table(name = "usr_usuario")
 public class Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="usr_id")
+    @Column(name = "usr_id")
     private Long id;
-    @Column(name="usr_nome")
+
+    @Column(name = "usr_nome")
     private String nome;
-    @Column(name="usr_senha")
+
+    @Column(name = "usr_senha")
     private String senha;
 
-
-    
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="uau_usuario_autorizacao",
-    joinColumns = {@JoinColumn(name= "usr_id")},
-    inverseJoinColumns = {@JoinColumn(name = "aut_id")} //coluna que se refere a autorizacao
-    )
+    @JoinTable(name = "uau_usuario_autorizacao",
+        joinColumns = {@JoinColumn(name = "usr_id")},
+        inverseJoinColumns = {@JoinColumn(name = "aut_id")})//coluna que se refere a autorizacao
     private Set<Autorizacao> autorizacoes;
 
     @OneToMany(mappedBy = "usuario")
     private Set<Anotacao> anotacoes;
-    
+
+    //chama o construtor padrao
+    public Usuario(String nome, String senha) {
+        this();
+        this.nome = nome;
+        this.senha = senha;
+    }
 
     //preciso usar para não dar ruim, ele precisa por padrão para instanciar a entidade
-    public Usuario(){
+    public Usuario() {
         this.autorizacoes = new HashSet<Autorizacao>();
     }
 
     public Long getId() {
         return id;
     }
-    public Usuario(String nome, String senha) {
-        this(); //chama o construtor padrao
-        this.nome = nome;
-        this.senha = senha;
-    }
-    
 
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
+
     public String getSenha() {
         return senha;
     }
+
     public void setSenha(String senha) {
         this.senha = senha;
     }
 
+    public Set<Autorizacao> getAutorizacoes() {
+        return autorizacoes;
+    }
+
+    public void setAutorizacoes(Set<Autorizacao> autorizacoes) {
+        this.autorizacoes = autorizacoes;
+    }
+
+    public Set<Anotacao> getAnotacoes() {
+        return anotacoes;
+    }
+
+    public void setAnotacoes(Set<Anotacao> anotacoes) {
+        this.anotacoes = anotacoes;
+    }
     
 }
