@@ -6,4 +6,4 @@ import br.gov.sp.fatec.springboot3labiv.entity.Anotacao;
 
 public interface AnotacaoRepository extends JpaRepository<Anotacao, Long>{
     
-} 
+}
